@@ -94,4 +94,19 @@ const login = async (req, res) => {
   }
 };
 
-module.exports = { signup, login };
+const logout = async (req, res) => {
+  try {
+    res.clearCookie('jwt', {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+    });
+    res.status(200).json({ message: 'Logged out successfully' });
+    console.log('Logged out successfully');
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log('Error in logout', err.message);
+  }
+};
+
+module.exports = { signup, login, logout };
