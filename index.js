@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const PORT = process.env.PORT || 5000;
 const connectDb = require('./db/connectDb');
 const userRoutes = require('./routes/userRoutes');
+const chatRoutes = require('./routes/chatRoutes');
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/chat', chatRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server started at http://localhost:${PORT}`);
