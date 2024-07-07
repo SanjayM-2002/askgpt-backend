@@ -45,9 +45,12 @@ const signup = async (req, res) => {
     const savedUser = await newUser.save();
     generateTokenAndSetCookie(savedUser._id.toString(), res);
     return res.status(201).json({
-      _id: savedUser._id,
-      fullname: savedUser.fullname,
-      email: savedUser.email,
+      userDetails: {
+        _id: savedUser._id,
+        fullname: savedUser.fullname,
+        email: savedUser.email,
+      },
+      message: 'Signed up successfully',
     });
   } catch (error) {
     console.log('Error caught is: ', error.message);
@@ -81,9 +84,11 @@ const login = async (req, res) => {
     }
     generateTokenAndSetCookie(user._id.toString(), res);
     return res.status(200).json({
-      _id: user._id,
-      fullname: user.fullname,
-      email: user.email,
+      userDetails: {
+        _id: user._id,
+        fullname: user.fullname,
+        email: user.email,
+      },
       message: 'Logged in successfully',
     });
   } catch (error) {
