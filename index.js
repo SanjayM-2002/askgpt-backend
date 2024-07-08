@@ -10,7 +10,12 @@ const chatRoutes = require('./routes/chatRoutes');
 dotenv.config();
 const app = express();
 connectDb();
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 

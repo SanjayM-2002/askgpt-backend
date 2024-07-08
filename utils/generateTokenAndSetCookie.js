@@ -3,7 +3,7 @@ const generateTokenAndSetCookie = (userId, res) => {
   const token = jwt.sign({ userId }, process.env.JWT_SECRET, {
     expiresIn: '5d',
   });
-  res.cookie('jwt', token, {
+  res.cookie('askgptJwt', token, {
     httpOnly: true,
     maxAge: 5 * 24 * 60 * 60 * 1000,
     sameSite: 'strict',

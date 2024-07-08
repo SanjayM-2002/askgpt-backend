@@ -34,7 +34,7 @@ const completeChat = async (req, res) => {
       //   model: 'text-embedding-3-small',
       messages: chatArray,
     });
-    console.log('response is: ', chatResponse.choices[0].message);
+    // console.log('response is: ', chatResponse.choices[0].message);
     user.chats.push(chatResponse.choices[0].message);
     await user.save();
     return res.status(200).json({ chats: user.chats });
@@ -70,10 +70,10 @@ const completeChatGroq = async (req, res) => {
       model: 'llama3-8b-8192',
       messages: chatArray,
     });
-    console.log('response is: ', chatResponse.choices[0].message);
+    // console.log('response is: ', chatResponse.choices[0].message);
     user.chats.push(chatResponse.choices[0].message);
     await user.save();
-    return res.status(200).json({ chats: user.chats });
+    return res.status(200).json({ message: 'Success', chats: user.chats });
   } catch (error) {
     console.log('Error caught is: ', error.message);
     return res
@@ -82,4 +82,42 @@ const completeChatGroq = async (req, res) => {
   }
 };
 
-module.exports = { completeChat, completeChatGroq };
+const fetchUserChats = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+    const userchats = user.chats;
+    return res.status(200).json({ message: 'Success', userchats });
+  } catch (error) {
+    console.log('Error caught is: ', error.message);
+    return res
+      .status(500)
+      .json({ error: 'Server error', errorDetails: error.message });
+  }
+};
+
+const clearUserChats = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(401).json({ error: 'User not found' });
+    }
+    user.chats = [];
+    await user.save();
+    return res.status(200).json({ message: 'Success' });
+  } catch (error) {
+    console.log('Error caught is: ', error.message);
+    return res
+      .status(500)
+      .json({ error: 'Server error', errorDetails: error.message });
+  }
+};
+
+module.exports = {
+  completeChat,
+  completeChatGroq,
+  fetchUserChats,
+  clearUserChats,
+};

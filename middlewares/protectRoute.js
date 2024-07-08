@@ -3,15 +3,15 @@ const { User } = require('../models/userModel');
 
 const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.jwt;
-    console.log('token inside middleware is: ', token);
+    const token = req.cookies.askgptJwt;
+    // console.log('token inside middleware is: ', token);
     if (!token) {
       return res.status(400).json({ error: 'Unauthorised user' });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log('decoded inside middleware is: ', decoded);
+    // console.log('decoded inside middleware is: ', decoded);
     const user = await User.findById(decoded.userId);
-    console.log('user object is: ', user);
+    // console.log('user object is: ', user);
     if (!user) {
       return res.status(401).json({ error: 'Invalid token' });
     }

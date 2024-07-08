@@ -101,7 +101,7 @@ const login = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.clearCookie('jwt', {
+    res.clearCookie('askgptJwt', {
       httpOnly: true,
       sameSite: 'strict',
       secure: process.env.NODE_ENV === 'production',
