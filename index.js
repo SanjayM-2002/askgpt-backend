@@ -10,14 +10,16 @@ const chatRoutes = require('./routes/chatRoutes');
 dotenv.config();
 const app = express();
 connectDb();
-app.use(
-  cors({
-    origin: true,
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, true);
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
+app.options('*', cors(corsOptions));
 
 app.get('/health', (req, res) => {
   res.status(200).json({ message: 'Health check success' });
