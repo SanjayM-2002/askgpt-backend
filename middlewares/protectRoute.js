@@ -12,6 +12,9 @@ const protectRoute = async (req, res, next) => {
     console.log('decoded inside middleware is: ', decoded);
     const user = await User.findById(decoded.userId);
     console.log('user object is: ', user);
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
     req.user = user;
     console.log('Middleware function returned successfully');
     next();
