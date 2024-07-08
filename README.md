@@ -53,6 +53,10 @@ npm run dev
 
 [Github repo] (https://github.com/SanjayM-2002/askgpt-frontend)
 
+## Demo Video
+
+[Video Link] (https://www.loom.com/share/0ccc0ff1b0a54856861a6e9c54c643b1?sid=a585558f-ed7f-4857-ba00-6638d9fc4082)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
